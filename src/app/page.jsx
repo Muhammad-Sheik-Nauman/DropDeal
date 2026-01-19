@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { LogIn,Rabbit,Shield,Bell, Icon } from "lucide-react";
 import Image from "next/image";
+import AddProductForm from "@/components/AddProductForm";
 
 export default function Home() {
   const user = null;
@@ -55,6 +56,9 @@ export default function Home() {
         track prices from any e-commerce site.Get instant alerts when price drop,Save money effortlessly
       </p>
       {/* product form */}
+      <AddProductForm user={user}/>
+
+
       {/* features */}
       {products.length === 0 && (
         <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-16">
