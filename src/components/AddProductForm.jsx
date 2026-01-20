@@ -41,6 +41,7 @@ const AddProductForm = ({user}) => {
             </Button>
         </div>
     </form>
+    {/* Auth Modal */}
     </>
   )
 }
