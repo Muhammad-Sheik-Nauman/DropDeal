@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { LogIn,Rabbit,Shield,Bell, Icon } from "lucide-react";
 import Image from "next/image";
 import AddProductForm from "@/components/AddProductForm";
+import AuthButton from "@/components/AuthButton";
 
 export default function Home() {
   const user = null;
@@ -29,7 +30,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-linear-to-br from-orange-50 via-white to-orange-50">
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 py-4  flex  justify-self-start gap-10  items-center">
           <div className="flex items-center gap-3">
             <Image
             src={"/drop-deal-logo.png"}
@@ -40,10 +41,7 @@ export default function Home() {
             />
           </div>
           {/* auth button */}
-          <Button variant="default" size="sm" className={"bg-orange-500 hover:bg-orange-600 gap-2"}>
-           <LogIn className="w-4 h-4"/>
-            Sign In
-          </Button>
+          <AuthButton user={user}/>
         </div>
       </header>
       <section className="py-20 px-4">
