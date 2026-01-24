@@ -1,23 +1,34 @@
 "use client"
 import React, { useState } from 'react'
 import { Button } from './ui/button'
-import { LogIn } from 'lucide-react'
-import { DialogDemo as AuthModel }  from './AuthModel'
+import { LogIn, LogOut } from 'lucide-react'
+import { DialogDemo as AuthModel } from './AuthModel'
 
-const AuthButton = ({user}) => {
-    const[showAuthModal,setShowAuthModal]=useState(false);
+const AuthButton = ({ user }) => {
+    const [showAuthModal, setShowAuthModal] = useState(false);
+
+    if (user) {
+        return (
+            <form action={() => { }}>
+                <Button variant='ghost' size='sm' type="submit" className="gap-2">
+                    <LogOut className="w-4 h-4" />
+                SIGN OUT
+                </Button>
+            </form>
+        );
+    }
     return (
         <>
         <Button onClick={()=> setShowAuthModal(true)} variant="default" size="sm" className={"bg-orange-500 hover:bg-orange-600 gap-2"}>
-            <LogIn className="w-4 h-4" />
-            Sign In
-        </Button>
-        <AuthModel 
-        isOpen={showAuthModal}
-        onClose={()=> setShowAuthModal(false)}
-        />
-        </>
-    )
-}
+                    <LogIn className="w-4 h-4" />
+                    Sign In
+                </Button>
+                <AuthModel
+                    isOpen={showAuthModal}
+                    onClose={() => setShowAuthModal(false)}
+                />
+            </>
+        )
+    }
 
-export default AuthButton
+    export default AuthButton;
