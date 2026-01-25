@@ -1,8 +1,9 @@
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
+import { NextResponse } from "next/server";
 
 export async function GET(request) {
-    const {searchPrams} = new URL(request.url);
-    const code = SearchParamsContext.get("code");
+    const {searchParams} = new URL(request.url);
+    const code = searchParams.get("code");
 
     if(code){
         const supabase = await createClient();
