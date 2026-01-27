@@ -1,11 +1,20 @@
 import { Button } from "@/components/ui/button";
-import { LogIn,Rabbit,Shield,Bell, Icon } from "lucide-react";
+import { Rabbit,Shield,Bell } from "lucide-react";
 import Image from "next/image";
 import AddProductForm from "@/components/AddProductForm";
 import AuthButton from "@/components/AuthButton";
+import { createClient } from "../../utils/supabase/server";
 
-export default function Home() {
-  const user = null;
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  
+  console.log("User in page.jsx:", user ? user.email : "No user");
+
   const products=[];
   const FEATURES = [
     {

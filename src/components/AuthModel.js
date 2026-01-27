@@ -21,7 +21,7 @@ export function DialogDemo({ isOpen, onClose }) {
         await supabase.auth.signInWithOAuth({
         provider:"google",
         options:{
-            redirectTo:`${origin}/authcallback`
+            redirectTo:`${origin}/auth/callback`
         }
     })
 
