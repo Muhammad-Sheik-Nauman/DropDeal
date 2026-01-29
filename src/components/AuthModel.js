@@ -64,3 +64,4 @@ export function DialogDemo({ isOpen, onClose }) {
         </Dialog>
     )
 }
+export default DialogDemo;

@@ -6,7 +6,7 @@ import { DialogDemo as AuthModel } from './AuthModel'
 import { signOut } from '@/app/actions'
 
 const AuthButton = ({ user }) => {
-    const [showAuthModal, setShowAuthModal] = useState(false);
+    const [showAuthModel, setShowAuthModel] = useState(false);
 
     if (user) {
         return (
@@ -18,18 +18,20 @@ const AuthButton = ({ user }) => {
             </form>
         );
     }
-    return (
-        <>
-        <Button onClick={()=> setShowAuthModal(true)} variant="default" size="sm" className={"bg-orange-500 hover:bg-orange-600 gap-2"}>
-                    <LogIn className="w-4 h-4" />
-                    Sign In
-                </Button>
-                <AuthModel
-                    isOpen={showAuthModal}
-                    onClose={() => setShowAuthModal(false)}
-                />
-            </>
-        )
-    }
+   // ...existing code...
+return (
+    <>
+    <Button onClick={()=> setShowAuthModel(true)} variant="default" size="sm" className={"bg-orange-500 hover:bg-orange-600 gap-2"}>
+                <LogIn className="w-4 h-4" />
+                Sign In
+            </Button>
+            <AuthModel
+                isOpen={showAuthModel}
+                onClose={() => setShowAuthModel(false)}
+            />
+        </>
+    )
+}
+// ...existing code...
 
     export default AuthButton;
