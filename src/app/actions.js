@@ -64,25 +64,73 @@ export async function addProduct(formData) {
         const shouldAddHistory =
             !isUpdate || existingProduct.current_price !== newPrice;
 
-            if(shouldAddHistory){
-                await supabase.from("price-history").insert({
-                    product_id:product.id,
-                    price:newPrice,
-                    currency:currency,
-                })
-            }
+        if (shouldAddHistory) {
+            await supabase.from("price-history").insert({
+                product_id: product.id,
+                price: newPrice,
+                currency: currency,
+            })
+        }
 
-            revalidatePath("/");
-            return{
-                success:true,
-                product,
-                message:isUpdate
+        revalidatePath("/");
+        return {
+            success: true,
+            product,
+            message: isUpdate
                 ? "product updated with latest price!"
                 : "Product added successfully!",
-            }
+        }
 
     } catch (error) {
-        console.log("Add product error",error);
-        return{error:error.message || "Failed to add product"};
+        console.log("Add product error", error);
+        return { error: error.message || "Failed to add product" };
     }
+}
+
+export async function deleteProduct(productId) {
+    try {
+        const supabase = await createClient();
+        const { error } = await supabase
+            .from("products")
+            .delete()
+            .eq("id", productId);
+        if (error) throw error;
+        revalidatePath("/");
+        return { success: true };
+    } catch (error) {
+        return { error: error.message }
+    }
+}
+
+export async function getProducts() {
+    try {
+        const supabase = await createClient();
+        const { error } = await supabase
+            .from("products")
+            .select("*")
+            .order("created_at", { ascending: false });
+        if (error) throw error;
+        revalidatePath("/");
+        return data || [];
+    } catch (error) {
+        console.error("Get products error:", error);
+        return [];
+    }
+}
+
+export async function getPriceHistory(productId) {
+    try {
+        const supabase = await createClient();
+        const { data, error } = await supabase
+            .from("price_history")
+            .select("*")
+            .eq("product_id", productId)
+            .order("checked_at", { ascending: true });
+        if (error) throw error;
+        return data || [];
+    } catch (error) {
+        console.error("Get price hsitory error:", error);
+        return [];
+    }
+
 }
