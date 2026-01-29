@@ -34,7 +34,7 @@ export async function addProduct(formData) {
             return { error: "Could not extract product information from this URL" };
         }
 
-        const newPricw = parseFloat(productData.currentPrice);
+        const newPrice = parseFloat(productData.currentPrice);
         const currency = productData.currencyCode || "USD";
 
         const { data: existingProduct } = await supabase.from("products").select("id,current_price")
@@ -64,7 +64,25 @@ export async function addProduct(formData) {
         const shouldAddHistory =
             !isUpdate || existingProduct.current_price !== newPrice;
 
-    } catch (error) {
+            if(shouldAddHistory){
+                await supabase.from("price-history").insert({
+                    product_id:product.id,
+                    price:newPrice,
+                    currency:currency,
+                })
+            }
 
+            revalidatePath("/");
+            return{
+                success:true,
+                product,
+                message:isUpdate
+                ? "product updated with latest price!"
+                : "Product added successfully!",
+            }
+
+    } catch (error) {
+        console.log("Add product error",error);
+        return{error:error.message || "Failed to add product"};
     }
 }
