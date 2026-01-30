@@ -5,6 +5,8 @@ import { Input } from './ui/input'
 import { Loader, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { DialogDemo as AuthModel } from './AuthModel'
+import { toast } from 'sonner';
+import { addProduct } from '@/app/actions';
 
 const AddProductForm = ({ user }) => {
     const [url, setUrl] = useState("");
@@ -13,6 +15,26 @@ const AddProductForm = ({ user }) => {
 
     const handleSubmit = async (e) => { 
         e.preventDefault();
+
+        if(!user){
+            setShowAuthModel(true);
+            return;
+        }
+        setLoading(true);
+
+        const formData = new FormData();
+        formData.append("url",url);
+
+        const result = await addProduct(formData);
+
+        if(result.error){
+            toast.error(result.error);
+
+        }else{
+            toast.success(result.message || "product tracked successfully!")
+            setUrl("");
+        }
+        setLoading(false);
     };
 
     return (
