@@ -26,6 +26,7 @@ const AddProductForm = ({ user }) => {
         formData.append("url",url);
 
         const result = await addProduct(formData);
+        console.log("here");
 
         if(result.error){
             toast.error(result.error);

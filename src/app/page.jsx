@@ -4,6 +4,8 @@ import Image from "next/image";
 import AddProductForm from "@/components/AddProductForm";
 import AuthButton from "@/components/AuthButton";
 import { createClient } from "../../utils/supabase/server";
+import { getProducts } from "./actions";
+import ProductCard from "@/components/ProductCard";
 
 export const dynamic = 'force-dynamic';
 
@@ -15,7 +17,7 @@ export default async function Home() {
 
   console.log("User in page.jsx:", user ? user.email : "No user");
 
-  const products = [];
+  const products = user?await getProducts():[];
   const FEATURES = [
     {
       icon: Rabbit,
@@ -88,6 +90,20 @@ export default async function Home() {
           )}
         </div>
       </section>
+      {user && products.length>0  && (
+        <section className="max-w-7xl mx-auto px-4 pb-20 px-25 ">
+          <div className="flex item-center justify-baseline mb-6 gap-3">
+            <h3 className="text-2xl font-bold text-gray-900">Your Tracked Products</h3>
+            <span className="text-sm text-gray-500 px-87">
+              {products.length}{products.length === 1 ? " product":" products"}
+
+            </span>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 items-start">
+            {products.map(product=><ProductCard key={product.id} product={product}/>)}
+          </div>
+    
+      </section>)}
 
          {user && products.length === 0 && (
         <section className="max-w-2xl mx-auto px-4 pb-20 text-center">

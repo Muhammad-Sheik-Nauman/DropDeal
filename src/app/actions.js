@@ -105,12 +105,11 @@ export async function deleteProduct(productId) {
 export async function getProducts() {
     try {
         const supabase = await createClient();
-        const { error } = await supabase
+        const { data, error } = await supabase
             .from("products")
             .select("*")
             .order("created_at", { ascending: false });
         if (error) throw error;
-        revalidatePath("/");
         return data || [];
     } catch (error) {
         console.error("Get products error:", error);
