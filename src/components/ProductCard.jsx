@@ -15,6 +15,8 @@ import { ChevronDown, ChevronUp, ExternalLink, TrendingDown } from 'lucide-react
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
+import PriceChart from "./PriceChart";
+
 
 const ProductCard = ({ product }) => {
     const [showChart, setShowCart] = useState(false);
