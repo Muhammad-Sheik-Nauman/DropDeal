@@ -99,7 +99,7 @@ const ProductCard = ({ product }) => {
             </CardContent>
             {showChart &&(
                 <CardFooter className="pt-0">
-                <PriceChart product={product.id}/>
+                <PriceChart productId={product.id}/>
             </CardFooter>
             )}
         </Card>
